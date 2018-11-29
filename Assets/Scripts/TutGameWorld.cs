@@ -22,17 +22,18 @@ public class TutGameWorld : MonoBehaviour {
 
 
     public bool isGameOver, justAlones, blueFirst, blueTake, bannerChange, blowUp, goodMove, blueWin, moveFinger, xMove4;
-    private float a, b, c, d, speed, speed2, fingerSpeed,fingerSpeed2, bFinger, eFinger;
+    private float a, b, c, d, speed, speed2, fingerSpeed, fingerSpeed2, bFinger, eFinger;
     public float xDifference;
     private int p1WinCounter, p2WinCounter, blowIndex;
     public bool canPlay = true;
     public int numOfselected;
 
     public void Awake() {
-        sound = ClickSound.instance;
+       // sound = ClickSound.instance;
         Input.multiTouchEnabled = false;
         SetUpButtons();
         blueFirst = true;
+        blueTake = true;
         moveFinger = true;
         playerSide = firstSprite;
         restartButton.SetActive(false);
@@ -51,7 +52,7 @@ public class TutGameWorld : MonoBehaviour {
             buttonList[i].GetComponent<TutSquare>().SetGwReference(this);
             startPositions[i] = buttonList[i].transform.localPosition;
             // disabled buttons za prvi tutorijal
-            if(i == 7 || i == 8 || i == 12 || i == 13 || i == 17) {
+            if (i == 7 || i == 8 || i == 12 || i == 13 || i == 17) {
                 buttonList[i].interactable = false;
                 buttonList[i].GetComponent<Image>().sprite = disabledSprite;
             }
@@ -73,7 +74,7 @@ public class TutGameWorld : MonoBehaviour {
                 if (!xMove4) {
                     bFinger = finger.transform.position.x;
                     eFinger = fingerPos[TutSquare.moveNum * 2 + 1].transform.position.x;
-                } 
+                }
                 FingerMove();
             }
         }
@@ -89,8 +90,8 @@ public class TutGameWorld : MonoBehaviour {
             x = 0.55f;
         }
 
-        finger.transform.position = (TutSquare.moveNum == 3 || TutSquare.moveNum == 2 || xMove4)? new Vector3(Mathf.SmoothStep(bFinger, eFinger, fingerSpeed), finger.transform.position.y, finger.transform.position.z) :  new Vector3(finger.transform.position.x, Mathf.SmoothStep(bFinger, eFinger, fingerSpeed), finger.transform.position.z);
-        
+        finger.transform.position = (TutSquare.moveNum == 3 || TutSquare.moveNum == 2 || xMove4) ? new Vector3(Mathf.SmoothStep(bFinger, eFinger, fingerSpeed), finger.transform.position.y, finger.transform.position.z) : new Vector3(finger.transform.position.x, Mathf.SmoothStep(bFinger, eFinger, fingerSpeed), finger.transform.position.z);
+
         if (fingerSpeed >= x) {
             fingerSpeed = 0;
             if (TutSquare.moveNum == 4 && !xMove4 && !cancelSquare) {
@@ -100,11 +101,12 @@ public class TutGameWorld : MonoBehaviour {
             } else {
                 xMove4 = false;
                 finger.transform.position = fingerPos[TutSquare.moveNum * 2].transform.position;
+                CancelMove();
             }
         }
 
     }
-    
+
 
     private void BannerSwitch() {
 
@@ -130,7 +132,7 @@ public class TutGameWorld : MonoBehaviour {
                 for (int i = 0; i < buttonList.Length; i++) {
                     if ((blueWin && buttonList[i].GetComponent<Image>().sprite == secondSprite)
                         || (!blueWin && buttonList[i].GetComponent<Image>().sprite == firstSprite)) {
-                        if (PlayerPrefs.GetInt("Sound") == 1) // Handheld.Vibrate();
+                       // if (PlayerPrefs.GetInt("Sound") == 1) Handheld.Vibrate();
                         iTween.ShakePosition(buttonList[i].gameObject, iTween.Hash("x", 8f, "y", 8f, "time", 1.7f, "oncompletetarget", this.gameObject, "oncomplete", "TravelToScore", "oncompleteparams", i));
                     }
                 }
@@ -148,10 +150,10 @@ public class TutGameWorld : MonoBehaviour {
     public void TravelToScore(int i) {
         // put do score bannera
         if (blueWin)
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x * 1.03f, "y", p1PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x * 1.03f, "y", p1PH.transform.position.y, "time", 1.5f,
                                                                 "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
         else
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x * 1.03f, "y", p2PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x * 1.03f, "y", p2PH.transform.position.y, "time", 1.5f,
                                                                "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
     }
 
@@ -169,10 +171,11 @@ public class TutGameWorld : MonoBehaviour {
             xMove4 = false;
             CheckMove();
             if (goodMove) {
+                blueTake = !blueTake;
                 StartCoroutine("RedPlayAnim");
-                if (!isGameOver) sound.GameSound(2);
+               // if (!isGameOver) sound.GameSound(2);
             } else {
-                for(int i = 0; i <= 5; i++) if(TutSquare.moveNum == i) finger.transform.position = fingerPos[i*2].transform.position;
+                for (int i = 0; i <= 5; i++) if (TutSquare.moveNum == i) finger.transform.position = fingerPos[i * 2].transform.position;
                 fingerSpeed = 0;
                 finger.transform.SetAsLastSibling();
                 moveFinger = true;
@@ -181,13 +184,13 @@ public class TutGameWorld : MonoBehaviour {
     }
 
     public void SetTutText() {
-        if(TutSquare.moveNum == 0) 
+        if (TutSquare.moveNum == 0)
             tutText.text = "You can play horizontally or vertically, but not both!";
-        else if(TutSquare.moveNum == 3 && !cancelSquare)
+        else if (TutSquare.moveNum == 3 && !cancelSquare)
             tutText.text = "You can cancel your move by going in opposite direction";
-        else if(cancelSquare)
+        else if (cancelSquare)
             tutText.text = "You're almost ready";
-        else if(TutSquare.moveNum == 4) 
+        else if (TutSquare.moveNum == 4)
             tutText.text = "You can also leave the opponent with multiple secluded squares and still win!";
         else if (TutSquare.moveNum == 5)
             tutText.text = "Have fun outsmarting your friends!";
@@ -218,7 +221,7 @@ public class TutGameWorld : MonoBehaviour {
     public void SetFingerStart(int i) {
         fingerSpeed = 0;
         finger.transform.position = fingerPos[i * 2 + 2].transform.position;
-        if(!cancelSquare) SetGoodMove();
+        if (!cancelSquare) SetGoodMove();
     }
 
     public void SetGoodMove() {
@@ -258,6 +261,7 @@ public class TutGameWorld : MonoBehaviour {
                 yield return new WaitForSeconds(0.3f);
                 RedPlay(i);
             }
+            yield return new WaitForSeconds(0.3f);
             SetRedGoodMove();
         } else {
             bannerChange = false;
@@ -266,13 +270,13 @@ public class TutGameWorld : MonoBehaviour {
     }
 
     public void RedPlay(int i) {
-        sound.GameSound(1);
+      //  sound.GameSound(1);
         buttonList[i].GetComponent<Image>().sprite = secondSprite;
         buttonList[i].interactable = false;
     }
 
     public void SetRedGoodMove() {
-        if(!isGameOver) sound.GameSound(2);
+       // if (!isGameOver) sound.GameSound(2);
         finger.transform.SetAsLastSibling();
         moveFinger = true;
         goodMove = false;
@@ -280,6 +284,7 @@ public class TutGameWorld : MonoBehaviour {
         TutSquare.moveNum++;
         playerSide = (playerSide == firstSprite) ? secondSprite : firstSprite;
         bannerChange = true;
+        blueTake = !blueTake;
     }
 
     public void GameOver() {
@@ -294,7 +299,7 @@ public class TutGameWorld : MonoBehaviour {
 
     private void GameOverRoutine(Sprite ps) {
         if (TutSquare.moveNum == 5) {
-            StartCoroutine("EndAnim",ps);
+            StartCoroutine("EndAnim", ps);
         } else {
             //pokretanje blowUpa zadnjeg buttona u updateu
             blowIndex = 18;
@@ -305,11 +310,11 @@ public class TutGameWorld : MonoBehaviour {
         }
     }
 
-    private IEnumerator EndAnim (Sprite ps) {
+    private IEnumerator EndAnim(Sprite ps) {
         for (int i = 0; i < buttonList.Length; i++) {
             if (buttonList[i].interactable && i != 16) {
                 yield return new WaitForSeconds(0.3f);
-                sound.GameSound(1);
+                //sound.GameSound(1);
                 buttonList[i].GetComponent<Image>().sprite = ps;
                 ps = (ps == secondSprite) ? firstSprite : secondSprite;
             }
@@ -333,14 +338,18 @@ public class TutGameWorld : MonoBehaviour {
     }
 
     public void CancelMove() {
+
+        for (int i = 0; i < buttonList.Length; i++)
+            if (buttonList[i].GetComponent<TutSquare>().GetSelected()) buttonList[i].GetComponent<TutSquare>().Restart();
+
+        if (!blueTake) return;
         xMove4 = false;
         goodMove = false;
         for (int i = 0; i <= 5; i++) if (TutSquare.moveNum == i) finger.transform.position = fingerPos[i * 2].transform.position;
         fingerSpeed = 0;
         moveFinger = true;
         finger.transform.SetAsLastSibling();
-        for (int i = 0; i < buttonList.Length; i++)
-            if (buttonList[i].GetComponent<TutSquare>().GetSelected()) buttonList[i].GetComponent<TutSquare>().Restart();
+
     }
 
     public void Restart() {
@@ -349,6 +358,7 @@ public class TutGameWorld : MonoBehaviour {
         gameOverPanel.SetActive(false);
         speed = 0;
         TutSquare.moveNum++;
+        blueTake = true;
 
         for (int i = 0; i < buttonList.Length; i++) {
             buttonList[i].GetComponent<TutSquare>().button.interactable = true;

@@ -122,15 +122,17 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
 
     public void DeleteInMove(float thisPos, float lastPos) {
-        if (thisPos != lastPos) {
-            // sound.GameSound(3);
-            gw.numOfselected--;
-            gw.boxList[gw.numOfselected].GetComponent<Square>().DeleteOneByOne();
-            gw.boxList.RemoveAt(gw.numOfselected);
-            buttonY = GetPosition().y;
-            buttonX = GetPosition().x;
-        }
+        if (gw.boxList.IndexOf(this) != gw.boxList.Count - 2) return;
+
+        // sound.GameSound(3);
+        gw.numOfselected--;
+        gw.boxList[gw.numOfselected].GetComponent<Square>().DeleteOneByOne();
+        gw.boxList.RemoveAt(gw.numOfselected);
+        buttonY = GetPosition().y;
+        buttonX = GetPosition().x;
+
     }
+
 
     public void DeleteOneByOne() {
         button.interactable = true;

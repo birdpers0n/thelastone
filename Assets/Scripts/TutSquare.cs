@@ -10,18 +10,17 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     private TutGameWorld gw;
     public Button button;
     private ClickSound sound;
-    
+
 
     public static bool pressed, sameXdistance, sameYdistance, canceledMove, isHor, firstCheck;
     private static float buttonY, buttonX;
     public static float width;
-    public bool selected, pointerUp, isAlone, right, up;
+    public bool selected, pointerUp, isAlone, pressedButton;
     public static int moveNum;
-    public static bool goodMove;
-
+    public static bool goodMove, up, down, left, right;
 
     public void Awake() {
-        sound = FindObjectOfType<AudioSource>().GetComponent<ClickSound>();
+       // sound = FindObjectOfType<AudioSource>().GetComponent<ClickSound>();
         width = GetComponent<RectTransform>().rect.width;
         moveNum = 0;
     }
@@ -31,12 +30,14 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
 
     public void OnPointerDown(PointerEventData eventData) {
+        gw.CancelMove();
         gw.canPlay = false;
-        for (int i = 0; i <= 5; i++) if (moveNum == i && button.tag == i.ToString())  FingerPressed();
+        for (int i = 0; i <= 5; i++) if (moveNum == i && button.tag == i.ToString()) FingerPressed();
         if (button.interactable && gw.canPlay) {
-            sound.GameSound(1);
+         //   sound.GameSound(1);
             firstCheck = true;
             pressed = true;
+            pressedButton = true;
             selected = true;
             pointerUp = true;
             canceledMove = false;
@@ -53,12 +54,20 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         gw.finger.transform.SetAsFirstSibling();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (transform.tag == "13" && moveNum == 4) {
+            gw.CancelMove();
+            return;
+        }
+        if (gw.isGameOver) return;
+
+        selected = true;
+        SetUpSprites();
+    }
+
     public void OnPointerEnter(PointerEventData eventData) {
 
-
-
         if (pressed && !canceledMove) {
-
             if (button.interactable) {
                 sameXdistance = IsSameDistance(GetPosition().x, buttonX);
                 sameYdistance = IsSameDistance(GetPosition().y, buttonY);
@@ -80,7 +89,7 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
                     DeleteInMove(GetPosition().x, buttonX);
                 } else if (GetPosition().y != buttonY) {
                     //illegal move
-                    sound.GameSound(3);
+                  //  sound.GameSound(3);
                     gw.CancelMove();
 
                 }
@@ -94,7 +103,7 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
                     DeleteInMove(GetPosition().y, buttonY);
                 } else if (GetPosition().x != buttonX) {
                     //illegal move
-                    sound.GameSound(3);
+                  //  sound.GameSound(3);
                     gw.CancelMove();
 
                 }
@@ -102,8 +111,12 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
         }
     }
 
+
+
     public void OnPointerUp(PointerEventData eventData) {
+        //gw.canPlay = false;
         pressed = false;
+        pressedButton = false;
         if (!canceledMove && !gw.GetGameOver() && pointerUp) {
             gw.EndTurn();
         }
@@ -112,14 +125,14 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void Play(bool boolean, float thisPos, float buttonPos) {
         if (boolean && thisPos == buttonPos) {
-            sound.GameSound(1);
+         //   sound.GameSound(1);
             buttonY = GetPosition().y;
             buttonX = GetPosition().x;
             SetUpSprites();
             selected = true;
             button.interactable = false;
         } else if (thisPos != buttonPos) {
-            sound.GameSound(3);
+        //    sound.GameSound(3);
             if (GetPosition() == gw.buttonList[13].transform.position) {
                 gw.cancelSquare = true;
                 gw.SetTutText();
@@ -130,17 +143,19 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
 
     public void DeleteInMove(float thisPos, float lastPos) {
-        if (thisPos != lastPos) {
-            sound.GameSound(3);
-            gw.numOfselected--;
-            gw.boxList[gw.numOfselected].GetComponent<TutSquare>().DeleteOneByOne();
-            gw.boxList.RemoveAt(gw.numOfselected);
-            buttonY = GetPosition().y;
-            buttonX = GetPosition().x;
-        }
+        if (gw.boxList.IndexOf(this) != gw.boxList.Count - 2) return;
+
+        // sound.GameSound(3);
+        gw.numOfselected--;
+        gw.boxList[gw.numOfselected].GetComponent<TutSquare>().DeleteOneByOne();
+        gw.boxList.RemoveAt(gw.numOfselected);
+        buttonY = GetPosition().y;
+        buttonX = GetPosition().x;
+
     }
 
     public void DeleteOneByOne() {
+
         button.interactable = true;
         button.GetComponent<Image>().sprite = gw.normalSprite;
         button.transform.localScale = new Vector3(1f, 1f, 0);
@@ -148,7 +163,8 @@ public class TutSquare : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void Restart() {
         button.interactable = true;
-        SetUpResetSprites();
+        // da se prvi ne brise
+        if (moveNum.ToString() != transform.tag) SetUpResetSprites();
         canceledMove = true;
         gw.numOfselected = 0;
         gw.boxList.Remove(this);

@@ -1,4 +1,4 @@
-Android
+WindowsStandalone
 SceneListBegin?
 Assets/Scenes/Start.unity
 Assets/Scenes/Game.unity
@@ -126,7 +126,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
 8eb725c2a95b37ec7edfb458021119e5 Assembly-CSharp.dll:.Player
-087554053938d2992cf103a3033e02b0 Assembly-CSharp.dll:.GameWorld
+b3ebd1147b34b9c25d5ce44b6f562810 Assembly-CSharp.dll:.GameWorld
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -156,5 +156,5 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 e2fc6fa0460cdfea8804b7196fc6824d Assembly-CSharp.dll:.Square
 42359aafa7faa8f5c7ea8186e42e5385 Assembly-CSharp.dll:.TutGameWorld
-e2fc6fa0460cdfea8804b7196fc6824d Assembly-CSharp.dll:.TutSquare
+c2270b1cec306c129f54240f890d9e12 Assembly-CSharp.dll:.TutSquare
 23dca76ae7156e8621fc289f51a85d4c Assembly-CSharp.dll:.Disconnect

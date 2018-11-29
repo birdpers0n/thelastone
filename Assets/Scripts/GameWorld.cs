@@ -22,7 +22,7 @@ public class GameWorld : NetworkBehaviour {
 
     private int br1, br2;
 
-    public bool isGameOver, justAlones, blueFirst, blueTake, bannerChange, blowUp, blaka = true, blueWin;
+    public bool isGameOver, justAlones, blueFirst, blueTake, bannerChange, blowUp, blueWin;
     private float a, b, c, d, speed, speed2;
     public float xDifference;
     private int p1WinCounter, p2WinCounter, sumOfAlones, numOfInteractables, blowIndex;
