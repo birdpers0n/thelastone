@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cabbagegamesthelastbox", "cabbagegamesthelastbox.csproj", "{D009C369-F334-2BB1-121D-C61E7815C1C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cabbagegamesthelastbox.Plugins", "cabbagegamesthelastbox.Plugins.csproj", "{9F0883CB-97B9-9F66-DDF2-1C76FFE938AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D009C369-F334-2BB1-121D-C61E7815C1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D009C369-F334-2BB1-121D-C61E7815C1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D009C369-F334-2BB1-121D-C61E7815C1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D009C369-F334-2BB1-121D-C61E7815C1C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0883CB-97B9-9F66-DDF2-1C76FFE938AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0883CB-97B9-9F66-DDF2-1C76FFE938AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0883CB-97B9-9F66-DDF2-1C76FFE938AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0883CB-97B9-9F66-DDF2-1C76FFE938AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
