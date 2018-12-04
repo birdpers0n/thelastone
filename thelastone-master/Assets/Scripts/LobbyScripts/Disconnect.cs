@@ -56,6 +56,8 @@ public class Disconnect : NetworkBehaviour {
             players[i].GetComponent<Player>().disconnectMark = true;
         }
         startChecking = true;
+
+        spawner.GetComponent<ButtonSpawner>().DisconnectedFeedback();
     }
 
     public void ReallyEnd()

@@ -31,6 +31,8 @@ public class GameWorld : NetworkBehaviour {
 
     public bool client=false;
     public Text Turn;
+    [HideInInspector]
+    public bool restartedAlready = false;
 
     public void Awake() {
         player = FindObjectOfType<Player>();
@@ -49,7 +51,6 @@ public class GameWorld : NetworkBehaviour {
         a = GetBannerPos(0).x;
         b = GetBannerPos(1).x;
     }
-
 
     public void Start() {
         for (int i = 0; i < 25; i++) syncList.Add(-1);
@@ -75,8 +76,6 @@ public class GameWorld : NetworkBehaviour {
 
 
     }
-
-
 
     public void Update() {
         for (int i = 0; i < syncList.Count; i++) {
@@ -157,6 +156,8 @@ public class GameWorld : NetworkBehaviour {
     }
 
     public void EndTurn() {
+        if (restartedAlready)
+            restartedAlready = false;
         CheckForAlones();
         if (!isGameOver) {
             // sound.GameSound(2);
@@ -310,6 +311,9 @@ public class GameWorld : NetworkBehaviour {
     }
 
     public void Restart() {
+        if (restartedAlready)
+            return;
+
         isGameOver = false;
         restartButton.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -360,6 +364,8 @@ public class GameWorld : NetworkBehaviour {
                 Turn.text = "YOUR TURN";
             else Turn.text = "OPPONENT'S TURN";
         }
+
+        restartedAlready = true;
         //DoRandom();
     }
     

@@ -18,7 +18,7 @@ public class Player : NetworkBehaviour {
 
     public GameObject opponentPlayer;
     public bool requestedRematch = false;
-    public bool acceptedRematch = false;   
+    public bool acceptedRematch = false;
 
     void Start() {
         gw = FindObjectOfType<GameWorld>().GetComponent<GameWorld>();
@@ -38,24 +38,26 @@ public class Player : NetworkBehaviour {
             if (isLocalPlayer) {
                 disconnectMark = false;
                 CmdMarkAsDisconnected();
+
+                
             }
         }
 
         //if (isServer)
         //{
-            if (opponentPlayer)
+        if (opponentPlayer)
+        {
+            if (disconnected == 0 && opponentPlayer.GetComponent<Player>().disconnected == 1)
             {
-                if (disconnected == 0 && opponentPlayer.GetComponent<Player>().disconnected==1)
-                {
-                    disconnected = 1;
-                    GameObject.Find("Disconnect Button").GetComponent<Disconnect>().startChecking = true;
-                    GameObject.Find("Disconnect Button").GetComponent<Disconnect>().networkManager = NetworkManager.singleton;
-                }
+                disconnected = 1;
+                GameObject.Find("Disconnect Button").GetComponent<Disconnect>().startChecking = true;
+                GameObject.Find("Disconnect Button").GetComponent<Disconnect>().networkManager = NetworkManager.singleton;
             }
-            else
-            {
-                TargetOpponent();
-            }
+        }
+        else
+        {
+            TargetOpponent();
+        }
         //}
         if (opponentPlayer != null)
         {
@@ -87,16 +89,17 @@ public class Player : NetworkBehaviour {
 
     public void EndForReal()
     {
-        //if (isServer)
-        //{
-        GameObject.Find("Disconnect Button").GetComponent<Disconnect>().ReallyEnd();
-        //}
+        if(isLocalPlayer)
+            GameObject.Find("Disconnect Button").GetComponent<Disconnect>().ReallyEnd();
     }
 
     public void DoRematch()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (opponentPlayer == null)
-            TargetOpponent(); 
+            TargetOpponent();
 
         if (opponentPlayer.GetComponent<Player>().requestedRematch)
         {
@@ -196,6 +199,13 @@ public class Player : NetworkBehaviour {
 
     [Command]
     void CmdMarkAsDisconnected()
+    {
+        disconnected = 1;
+        RpcMarkAsDisconnected();
+    }
+
+    [ClientRpc]
+    void RpcMarkAsDisconnected()
     {
         disconnected = 1;
     }
