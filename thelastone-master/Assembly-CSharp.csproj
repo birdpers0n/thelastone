@@ -106,8 +106,10 @@
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Scripts\AdManagerScript.cs" />
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\ButtonManagerOffline.cs" />
     <Compile Include="Assets\Scripts\ClickSound.cs" />
     <Compile Include="Assets\Scripts\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\GameWorldOffline.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\Disconnect.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\HostGame.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\JoinGame.cs" />

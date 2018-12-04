@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler {
 
     private GameWorld gw;
+    private GameWorldOffline gwOffline;
     public Button button;
     private ClickSound sound;
     private Player player;
@@ -24,6 +25,11 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void SetGwReference(GameWorld gw) {
         this.gw = gw;
+    }
+
+    public void SetGwReferenceOffline(GameWorldOffline gwO)
+    {
+        gwOffline = gwO;
     }
 
     public void OnPointerDown(PointerEventData eventData) {

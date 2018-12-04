@@ -397,6 +397,4 @@ public class GameWorld : NetworkBehaviour {
     public bool GetGameOver() {
         return isGameOver;
     }
-
-
 }

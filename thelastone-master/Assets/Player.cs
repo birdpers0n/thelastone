@@ -38,8 +38,6 @@ public class Player : NetworkBehaviour {
             if (isLocalPlayer) {
                 disconnectMark = false;
                 CmdMarkAsDisconnected();
-
-                
             }
         }
 
