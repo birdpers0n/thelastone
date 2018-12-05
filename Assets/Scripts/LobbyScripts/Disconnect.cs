@@ -36,7 +36,7 @@ public class Disconnect : NetworkBehaviour {
         }
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
         {
-            spawner.SetActive(true);
+            //spawner.SetActive(true);
             gameObject.SetActive(false);
         }
     }
@@ -53,9 +53,11 @@ public class Disconnect : NetworkBehaviour {
         for (int i = 0; i < players.Length; i++)
         {
             players[i].GetComponent<Player>().TargetOpponent();
-            players[i].GetComponent<Player>().doStuff = true;
+            players[i].GetComponent<Player>().disconnectMark = true;
         }
         startChecking = true;
+
+        spawner.GetComponent<ButtonSpawner>().DisconnectedFeedback();
     }
 
     public void ReallyEnd()

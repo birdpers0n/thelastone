@@ -39,10 +39,7 @@ public class ButtonSpawner : MonoBehaviour {
         }
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0 && buttonHolder.activeSelf)
         {
-            buttonHolder.SetActive(false);
-            lobbyDisconnectButton.SetActive(false);
-            WaitingText.text = "Player Disconnected";
-            backButton.SetActive(true);
+            DisconnectedFeedback();
         }
         if(GameObject.FindGameObjectsWithTag("Player").Length==1 && playerNumber == 2)
         {
@@ -76,5 +73,13 @@ public class ButtonSpawner : MonoBehaviour {
     public void DeactivateAuthenticationUI()
     {
         authenticationMenu.SetActive(false);
+    }
+
+    public void DisconnectedFeedback()
+    {
+        buttonHolder.SetActive(false);
+        lobbyDisconnectButton.SetActive(false);
+        WaitingText.text = "Player Disconnected";
+        backButton.SetActive(true);
     }
 }
