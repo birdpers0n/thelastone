@@ -64,8 +64,7 @@ public class JoinGame : MonoBehaviour
             {
                 if (match.name == filterName)
                 {
-                    GameObject _roomListItemGO = Instantiate(roomListItemPrefab);
-                    _roomListItemGO.transform.SetParent(roomListParent);
+                    GameObject _roomListItemGO = Instantiate(roomListItemPrefab, roomListParent);
 
                     RoomListItem _roomListItem = _roomListItemGO.GetComponent<RoomListItem>();
                     if (_roomListItem != null)
@@ -77,6 +76,7 @@ public class JoinGame : MonoBehaviour
                     // as well as setting up a callback function that will join the game.
 
                     roomList.Add(_roomListItemGO);
+                    _roomListItemGO.transform.localScale = new Vector3(1f, 1f, 1f);
                 }
             }
             filterName = "";
@@ -85,8 +85,9 @@ public class JoinGame : MonoBehaviour
         {
             foreach (MatchInfoSnapshot match in matchList)
             {
-                GameObject _roomListItemGO = Instantiate(roomListItemPrefab);
-                _roomListItemGO.transform.SetParent(roomListParent);
+                //GameObject _roomListItemGO = Instantiate(roomListItemPrefab);
+                //_roomListItemGO.transform.SetParent(roomListParent);
+                GameObject _roomListItemGO = Instantiate(roomListItemPrefab, roomListParent);
 
                 RoomListItem _roomListItem = _roomListItemGO.GetComponent<RoomListItem>();
                 if (_roomListItem != null)
@@ -98,6 +99,7 @@ public class JoinGame : MonoBehaviour
                 // as well as setting up a callback function that will join the game.
 
                 roomList.Add(_roomListItemGO);
+                _roomListItemGO.transform.localScale = new Vector3(1f, 1f, 1f);
             }
         }
 

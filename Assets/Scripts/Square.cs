@@ -29,7 +29,7 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void SetGwReferenceOffline(GameWorldOffline gwO)
     {
-        gwOffline = gwO;
+        this.gwOffline = gwO;
     }
 
     public void OnPointerDown(PointerEventData eventData) {

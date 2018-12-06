@@ -13,11 +13,17 @@ public class ButtonSpawner : MonoBehaviour {
     public GameObject authenticationMenu;
 
     int playerNumber;
+    [HideInInspector]
+    public bool checkedAlready = false;
 
     void Update () {
-		if(GameObject.FindGameObjectsWithTag("Player").Length == 2) {
-            if (!CheckForDisconnectionRequests())
-            {
+		if(GameObject.FindGameObjectsWithTag("Player").Length == 2 && !checkedAlready) {
+
+            /*Provjerava koliko je igraca u sceni i ukoliko ih je dvojica, ugasi menije i upali board.*/
+
+            checkedAlready = true;
+            //if (!CheckForDisconnectionRequests())
+            //{
                 buttonHolder.SetActive(true);
                 WaitingText.text = "";
                 if(backButton.activeSelf)
@@ -35,16 +41,14 @@ public class ButtonSpawner : MonoBehaviour {
                 }
 
                 playerNumber = 2;
-            }
+            //}
         }
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0 && buttonHolder.activeSelf)
         {
-            buttonHolder.SetActive(false);
-            lobbyDisconnectButton.SetActive(false);
-            WaitingText.text = "Player Disconnected";
-            backButton.SetActive(true);
+            //Ukoliko nema igraca (kada se  dovrsi disconnect, dati odgovarajuci feedback i opciju da se vrati na menu
+            DisconnectedFeedback();
         }
-        if(GameObject.FindGameObjectsWithTag("Player").Length==1 && playerNumber == 2)
+        if (GameObject.FindGameObjectsWithTag("Player").Length==1 && playerNumber == 2)
         {
             GameObject.Find("Disconnect Button").GetComponent<Disconnect>().ReallyEnd();
         }
@@ -76,5 +80,15 @@ public class ButtonSpawner : MonoBehaviour {
     public void DeactivateAuthenticationUI()
     {
         authenticationMenu.SetActive(false);
+    }
+
+    public void DisconnectedFeedback()
+    {
+        buttonHolder.SetActive(false);
+        if (disconnectButton)
+            disconnectButton.SetActive(false);
+        lobbyDisconnectButton.SetActive(false);
+        WaitingText.text = "Player Disconnected";
+        backButton.SetActive(true);
     }
 }

@@ -34,9 +34,7 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (SceneManager.GetActiveScene().name == "Start") {
                 Application.Quit();
-            } else {
-                SceneManager.LoadScene("Start");
-            }
+            } 
         }
     }
 

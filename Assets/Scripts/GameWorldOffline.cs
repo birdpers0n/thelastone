@@ -7,13 +7,14 @@ public class GameWorldOffline : MonoBehaviour {
 
     public Button[] buttonList;
     public Button backButton, soundButton;
-    public Vector3[] startPositions = new Vector3[25];
+    public Vector3[] startPositions;
     public Image[] banners;
-    public List<Square> boxList = new List<Square>();
+    public List<OffSquare> boxList = new List<OffSquare>();
     public GameObject restartButton, gameOverPanel;
     public Text gameOverText,p1PH,p2PH;
     public Sprite playerSide, firstSprite, secondSprite, disabledSprite, normalSprite;
-    private ClickSound sound;
+    public GameObject buttonHolder;
+   // private ClickSound sound;
 
     public bool isGameOver,justAlones,blueFirst,blueTake,bannerChange,blowUp, blaka = true, blueWin;
     private float a, b, c, d, speed, speed2;
@@ -24,7 +25,7 @@ public class GameWorldOffline : MonoBehaviour {
 
     public void Awake() {
 
-        sound = ClickSound.instance;
+     //   sound = ClickSound.instance;
         Input.multiTouchEnabled = false;
         SetUpButtons();
         // plavi uvijek igra prvi na pocetku
@@ -43,8 +44,9 @@ public class GameWorldOffline : MonoBehaviour {
     }
 
     public void SetUpButtons() {
+        startPositions = new Vector3[25];
         for (int i = 0; i < buttonList.Length; i++) {
-            buttonList[i].GetComponent<Square>().SetGwReferenceOffline(this);
+            buttonList[i].GetComponent<OffSquare>().SetGwReference(this);
             startPositions[i] = buttonList[i].transform.localPosition;
         }
         DoRandom();
@@ -91,12 +93,12 @@ public class GameWorldOffline : MonoBehaviour {
     private void BlowUp() {
         if (speed2 > 1f) {
             // kada se poveca i smanji -> radi shake i poziva put prema scoru
-            if (d == Square.width) {
+            if (d == OffSquare.width) {
                 blowUp = false;
                 for (int i = 0; i < buttonList.Length; i++) {
                     if ((blueWin && buttonList[i].GetComponent<Image>().sprite == secondSprite)
                         || (!blueWin && buttonList[i].GetComponent<Image>().sprite == firstSprite)) {
-                        if(PlayerPrefs.GetInt("Sound") == 1) Handheld.Vibrate();
+                      //  if(PlayerPrefs.GetInt("Sound") == 1) Handheld.Vibrate();
                         iTween.ShakePosition(buttonList[i].gameObject, iTween.Hash("x", 8f, "y", 8f, "time", 1.7f, "oncompletetarget", this.gameObject, "oncomplete", "TravelToScore", "oncompleteparams", i));
                     }
                 }
@@ -104,11 +106,11 @@ public class GameWorldOffline : MonoBehaviour {
             // smanjenje kada se poveca do cilja 
             speed2 = 0f;
             c = d;
-            d = Square.width;
+            d = OffSquare.width;
 
         }
         // povecanje velicine
-        speed = (d == Square.width) ? speed2 += 5f * Time.deltaTime : speed2 += 2f * Time.deltaTime;
+        speed = (d == OffSquare.width) ? speed2 += 5f * Time.deltaTime : speed2 += 2f * Time.deltaTime;
         if(numOfInteractables != 0)
         buttonList[blowIndex].GetComponent<RectTransform>().sizeDelta = new Vector2(Mathf.SmoothStep(c, d, speed2), Mathf.SmoothStep(c, d, speed2));
     }
@@ -134,7 +136,7 @@ public class GameWorldOffline : MonoBehaviour {
     public void EndTurn() {
         CheckForAlones();
         if (!isGameOver) {
-            sound.GameSound(2);
+         //   sound.GameSound(2);
             UnSelect();
             playerSide = (playerSide == firstSprite) ? secondSprite : firstSprite;
             bannerChange = true;
@@ -178,8 +180,8 @@ public class GameWorldOffline : MonoBehaviour {
         numOfInteractables = 0;
         for (int i = 0; i < buttonList.Length; i++) {
             if (buttonList[i].interactable) numOfInteractables++;
-            if (!buttonList[i].interactable && buttonList[i].GetComponent<Square>().GetIsAlone()) {
-                buttonList[i].GetComponent<Square>().SetIsAlone(false);
+            if (!buttonList[i].interactable && buttonList[i].GetComponent<OffSquare>().GetIsAlone()) {
+                buttonList[i].GetComponent<OffSquare>().SetIsAlone(false);
                 sumOfAlones--;
             }
         }
@@ -223,14 +225,14 @@ public class GameWorldOffline : MonoBehaviour {
                 numOfInteractables--;
                 yield return new WaitForSeconds(0.35f);
                 ps = (ps == firstSprite) ? secondSprite : firstSprite;
-                sound.GameSound(1);
+               // sound.GameSound(1);
                 buttonList[i].GetComponent<Image>().sprite = ps;
 
             } else if (buttonList[i].interactable) {
                 //pokretanje blowUpa zadnjeg buttona u updateu
                 blowIndex = i;
                 buttonList[i].transform.SetSiblingIndex(26);
-                c = Square.width;
+                c = OffSquare.width;
                 d = c * 4f;
                 blowUp = true;
             } else if (numOfInteractables == 0) {
@@ -243,17 +245,17 @@ public class GameWorldOffline : MonoBehaviour {
 
     public void UnSelect() {
         for (int i = 0; i < buttonList.Length; i++)
-            if (buttonList[i].GetComponent<Square>().GetSelected()) {
-                buttonList[i].GetComponent<Square>().SetSelected(false);
+            if (buttonList[i].GetComponent<OffSquare>().GetSelected()) {
+                buttonList[i].GetComponent<OffSquare>().SetSelected(false);
                 buttonList[i].transform.localScale = new Vector3(1f, 1f, 0);
-                boxList.Remove(buttonList[i].GetComponent<Square>());
+                boxList.Remove(buttonList[i].GetComponent<OffSquare>());
                 numOfselected = 0;
             }
     }
 
     public void CancelMove() {
         for (int i = 0; i < buttonList.Length; i++) 
-            if (buttonList[i].GetComponent<Square>().GetSelected()) buttonList[i].GetComponent<Square>().Restart();            
+            if (buttonList[i].GetComponent<OffSquare>().GetSelected()) buttonList[i].GetComponent<OffSquare>().Restart();            
     }
 
     public void Restart() {
@@ -265,10 +267,11 @@ public class GameWorldOffline : MonoBehaviour {
         speed = 0;
 
         for (int i = 0; i < buttonList.Length; i++) {
-            buttonList[i].GetComponent<Square>().button.interactable = true;
-            buttonList[i].GetComponent<Square>().SetIsAlone(false);
+            buttonList[i].GetComponent<OffSquare>().button.interactable = true;
+            buttonList[i].GetComponent<OffSquare>().SetIsAlone(false);
             buttonList[i].GetComponent<Image>().sprite = normalSprite;
             buttonList[i].transform.localPosition = startPositions[i];
+
         }
 
         //ko igra prvi 
@@ -287,12 +290,12 @@ public class GameWorldOffline : MonoBehaviour {
 
 
     public void SetAlone(int i) {
-        buttonList[i].GetComponent<Square>().SetIsAlone(true);
+        buttonList[i].GetComponent<OffSquare>().SetIsAlone(true);
         sumOfAlones++;
     }
 
     public bool InterAndNotAlone(int i) {
-        return buttonList[i].interactable && !buttonList[i].GetComponent<Square>().GetIsAlone();
+        return buttonList[i].interactable && !buttonList[i].GetComponent<OffSquare>().GetIsAlone();
     }
 
     public Sprite GetPlayerSide() {

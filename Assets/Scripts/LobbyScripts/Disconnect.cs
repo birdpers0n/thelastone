@@ -36,24 +36,20 @@ public class Disconnect : NetworkBehaviour {
         }
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
         {
-            spawner.SetActive(true);
             gameObject.SetActive(false);
         }
     }
 
     public void EndConnection()
     {
+        spawner.GetComponent<ButtonSpawner>().DisconnectedFeedback();
         networkManager = NetworkManager.singleton;
 
-        //networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
-        //0, networkManager.OnDropConnection);
-
-        spawner.SetActive(true);
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players.Length; i++)
         {
             players[i].GetComponent<Player>().TargetOpponent();
-            players[i].GetComponent<Player>().doStuff = true;
+            players[i].GetComponent<Player>().disconnectMark = true;
         }
         startChecking = true;
     }
@@ -66,9 +62,8 @@ public class Disconnect : NetworkBehaviour {
         networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
         0, networkManager.OnDropConnection);
         networkManager.StopHost();
-        //spawner.GetComponent<ButtonSpawner>().Deactivate();
-        //GameObject.Find("Button Manager").GetComponent<ButtonManager>().enabled = true;
-        //GameObject.Find("Button Manager").GetComponent<ButtonManager>().ActivateMenus();
+
+        spawner.GetComponent<ButtonSpawner>().checkedAlready = false;
     }
 
 }

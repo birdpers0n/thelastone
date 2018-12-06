@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thelastone", "thelastone.csproj", "{01DB8855-D223-9A54-B249-A512D79FD4FD}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thelastone", "Assembly-CSharp.csproj", "{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thelastone.Plugins", "thelastone.Plugins.csproj", "{DB654486-17CE-601F-8522-9416D9AC0D96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thelastone", "Assembly-CSharp-firstpass.csproj", "{6A90676E-0C50-9E09-D7F0-4314830479EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{01DB8855-D223-9A54-B249-A512D79FD4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01DB8855-D223-9A54-B249-A512D79FD4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01DB8855-D223-9A54-B249-A512D79FD4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01DB8855-D223-9A54-B249-A512D79FD4FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB654486-17CE-601F-8522-9416D9AC0D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB654486-17CE-601F-8522-9416D9AC0D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB654486-17CE-601F-8522-9416D9AC0D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB654486-17CE-601F-8522-9416D9AC0D96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A90676E-0C50-9E09-D7F0-4314830479EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A90676E-0C50-9E09-D7F0-4314830479EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A90676E-0C50-9E09-D7F0-4314830479EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A90676E-0C50-9E09-D7F0-4314830479EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

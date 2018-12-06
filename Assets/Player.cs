@@ -9,12 +9,16 @@ public class Player : NetworkBehaviour {
     private GameWorld gw;
     private int rand;
     public GameObject spawner;
-    public bool doStuff = false;
-    
+    public bool disconnectMark = false;
+    [HideInInspector]
+    public bool changedText = false;
+
     [SyncVar]
     public int disconnected = 0;
 
     public GameObject opponentPlayer;
+    public bool requestedRematch = false;
+    public bool acceptedRematch = false;
 
     void Start() {
         gw = FindObjectOfType<GameWorld>().GetComponent<GameWorld>();
@@ -24,31 +28,65 @@ public class Player : NetworkBehaviour {
             gw.client = true;
             return;
         }
+        for (int i = 0; i < 25; i++) gw.syncList.Add(-1);
         CmdRand();
     }
 
     void Update()
     {
-        if (doStuff)
+        if (disconnectMark)
         {
             if (isLocalPlayer) {
-                doStuff = false;
-                CmdDostuff();
+                disconnectMark = false;
+                CmdMarkAsDisconnected();
             }
         }
 
-        if (isServer) {
-            if (opponentPlayer) {
-                if (disconnected == 0 && opponentPlayer.GetComponent<Player>().disconnected == 1)
-                {
-                    disconnected = 1;
-                    GameObject.Find("Disconnect Button").GetComponent<Disconnect>().startChecking = true;
-                    GameObject.Find("Disconnect Button").GetComponent<Disconnect>().networkManager = NetworkManager.singleton;
-                }
-            }
-            else
+        //if (isServer)
+        //{
+        if (opponentPlayer)
+        {
+            if (disconnected == 0 && opponentPlayer.GetComponent<Player>().disconnected == 1)
             {
-                TargetOpponent();
+                disconnected = 1;
+                GameObject.Find("Disconnect Button").GetComponent<Disconnect>().startChecking = true;
+                GameObject.Find("Disconnect Button").GetComponent<Disconnect>().networkManager = NetworkManager.singleton;
+            }
+        }
+        else
+        {
+            TargetOpponent();
+        }
+        //}
+        if (opponentPlayer != null)
+        {
+            if (opponentPlayer.GetComponent<Player>().requestedRematch && !changedText)
+            {
+                changedText = true;
+                string endText = GameObject.FindGameObjectWithTag("EndText").GetComponent<Text>().text;
+                if (endText != "WAITING")
+                    GameObject.FindGameObjectWithTag("EndText").GetComponent<Text>().text = "ACCEPT";
+            }
+
+            if (requestedRematch && opponentPlayer.GetComponent<Player>().acceptedRematch)
+            {
+                gw.RestartButtons();
+                if (isServer) {
+                    for(int i=0;i<25;i++) gw.syncList.Insert(i, -1);
+                    CmdRand();
+                }
+                requestedRematch = false;
+                gw.GetComponent<GameWorld>().Restart();
+            }
+            else if (acceptedRematch)
+            {
+                gw.RestartButtons();
+                if (isServer) {
+                    for (int i = 0; i < 25; i++) gw.syncList.Insert(i, -1);
+                    CmdRand();
+                }
+                acceptedRematch = false;
+                gw.GetComponent<GameWorld>().Restart();
             }
         }
     }
@@ -60,10 +98,53 @@ public class Player : NetworkBehaviour {
 
     public void EndForReal()
     {
-        if (isServer)
-        {
+        if(isLocalPlayer)
             GameObject.Find("Disconnect Button").GetComponent<Disconnect>().ReallyEnd();
+    }
+
+    public void DoRematch()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        if (opponentPlayer == null)
+            TargetOpponent();
+
+        if (opponentPlayer.GetComponent<Player>().requestedRematch)
+        {
+            CmdAcceptRematch();
         }
+        else
+        {
+            GameObject.FindGameObjectWithTag("EndText").GetComponent<Text>().text = "WAITING";
+            CmdRequestRematch();
+        }
+    }
+
+    [Command]
+    public void CmdRequestRematch()
+    {
+        requestedRematch = true;
+        RpcRequestRematch();
+    }
+
+    [ClientRpc]
+    public void RpcRequestRematch()
+    {
+        requestedRematch = true;
+    }
+
+    [Command]
+    public void CmdAcceptRematch()
+    {
+        acceptedRematch = true;
+        RpcAcceptRematch();
+    }
+
+    [ClientRpc]
+    public void RpcAcceptRematch()
+    {
+        acceptedRematch = true;
     }
 
     [Command]
@@ -72,7 +153,6 @@ public class Player : NetworkBehaviour {
             rand = Random.Range(0, 25);
             while (!gw.buttonList[rand].interactable) rand = Random.Range(0, 25);
             gw.syncList[rand] = rand;
-
         }
     }
 
@@ -127,7 +207,14 @@ public class Player : NetworkBehaviour {
     }
 
     [Command]
-    void CmdDostuff()
+    void CmdMarkAsDisconnected()
+    {
+        disconnected = 1;
+        RpcMarkAsDisconnected();
+    }
+
+    [ClientRpc]
+    void RpcMarkAsDisconnected()
     {
         disconnected = 1;
     }
