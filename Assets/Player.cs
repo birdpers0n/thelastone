@@ -28,7 +28,6 @@ public class Player : NetworkBehaviour {
             gw.client = true;
             return;
         }
-        // restart random -> ovdje umjesto u gw u startu.
         for (int i = 0; i < 25; i++) gw.syncList.Add(-1);
         CmdRand();
     }
@@ -40,8 +39,6 @@ public class Player : NetworkBehaviour {
             if (isLocalPlayer) {
                 disconnectMark = false;
                 CmdMarkAsDisconnected();
-
-                
             }
         }
 
@@ -73,28 +70,22 @@ public class Player : NetworkBehaviour {
 
             if (requestedRematch && opponentPlayer.GetComponent<Player>().acceptedRematch)
             {
-
-                requestedRematch = false;
-                // restart random
                 gw.RestartButtons();
                 if (isServer) {
-                    for (int i = 0; i < 25; i++)   gw.syncList.Insert(i, -1);
+                    for(int i=0;i<25;i++) gw.syncList.Insert(i, -1);
                     CmdRand();
                 }
-                
-
+                requestedRematch = false;
                 gw.GetComponent<GameWorld>().Restart();
             }
             else if (acceptedRematch)
             {
-                acceptedRematch = false;
                 gw.RestartButtons();
                 if (isServer) {
                     for (int i = 0; i < 25; i++) gw.syncList.Insert(i, -1);
                     CmdRand();
                 }
-
-            
+                acceptedRematch = false;
                 gw.GetComponent<GameWorld>().Restart();
             }
         }
