@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{B4510C95-03F9-BF09-8F5B-40D100B89030}</ProjectGuid>
+    <ProjectGuid>{6A90676E-0C50-9E09-D7F0-4314830479EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
@@ -64,10 +64,10 @@
     <Compile Include="Assets\Plugins\Pixelplacement\iTween\iTween.cs" />
     <None Include="Assets\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone-master/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

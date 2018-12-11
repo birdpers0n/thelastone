@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{E160F228-9FFE-B2F1-8BDA-AE06D123D5C5}</ProjectGuid>
+    <ProjectGuid>{9A337C28-46EB-E4AB-5D9D-15E2DBA695EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -106,23 +106,26 @@
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Scripts\AdManagerScript.cs" />
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\ButtonManagerOffline.cs" />
     <Compile Include="Assets\Scripts\ClickSound.cs" />
     <Compile Include="Assets\Scripts\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\GameWorldOffline.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\Disconnect.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\HostGame.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\JoinGame.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\LobbyDisconnectScript.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\RoomListItem.cs" />
+    <Compile Include="Assets\Scripts\OffSquare.cs" />
     <Compile Include="Assets\Scripts\RestartController.cs" />
     <Compile Include="Assets\Scripts\Square.cs" />
     <Compile Include="Assets\Scripts\StartMatchProcedures.cs" />
     <Compile Include="Assets\Scripts\TutGameWorld.cs" />
     <Compile Include="Assets\Scripts\TutSquare.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone-master/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/CABBAGE GAMES/Desktop/TLO-master/thelastone/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -358,7 +361,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B4510C95-03F9-BF09-8F5B-40D100B89030}</Project>
+      <Project>{6A90676E-0C50-9E09-D7F0-4314830479EA}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

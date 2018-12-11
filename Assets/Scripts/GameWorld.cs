@@ -13,7 +13,7 @@ public class GameWorld : NetworkBehaviour {
     public Image[] banners;
     public List<Square> boxList = new List<Square>();
     public GameObject restartButton, gameOverPanel;
-    public Text gameOverText, p1PH, p2PH;
+    public Text gameOverText, p1PH, p2PH,timerText;
     public Sprite playerSide, firstSprite, secondSprite, disabledSprite, normalSprite;
     private ClickSound sound;
     private Player player;
@@ -34,7 +34,9 @@ public class GameWorld : NetworkBehaviour {
     [HideInInspector]
     public bool restartedAlready = false;
 
+
     public void Awake() {
+        
         player = FindObjectOfType<Player>();
         sound = ClickSound.instance;
         Input.multiTouchEnabled = false;
@@ -50,10 +52,6 @@ public class GameWorld : NetworkBehaviour {
         //pozicije bannera (a -> prvi, b -> drugi)
         a = GetBannerPos(0).x;
         b = GetBannerPos(1).x;
-    }
-
-    public void Start() {
-        // restart random
     }
 
     public void SetUpButtons() {
@@ -73,20 +71,29 @@ public class GameWorld : NetworkBehaviour {
         buttonList[i].GetComponent<Square>().SetSelected(true);
         numOfselected++;
         boxList.Add(buttonList[i].GetComponent<Square>());
+        
+    }
+
+    IEnumerator SetTimer(int time) {
+        int border = time;
+        for(int i = 0; i < border; i++) {
+            time--;
+            timerText.text = time.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        if (client) FindObjectOfType<Player>().CmdEndTurn();
+
 
 
     }
 
+
     public void Update() {
 
-        // restart random
-        if (!isGameOver) {
-
-            for (int i = 0; i < syncList.Count; i++) {
-                if (syncList[i] == i) {
-                    buttonList[i].GetComponent<Image>().sprite = disabledSprite;
-                    buttonList[i].interactable = false;
-                }
+        for (int i = 0; i < syncList.Count; i++) {
+            if (syncList[i] == i) {
+                buttonList[i].GetComponent<Image>().sprite = disabledSprite;
+                buttonList[i].interactable = false;
             }
         }
 
@@ -154,30 +161,21 @@ public class GameWorld : NetworkBehaviour {
 
     public void GoPanel() {
         // game over panel
-
         gameOverPanel.SetActive(true);
         p1PH.text = p1WinCounter.ToString();
         p2PH.text = p2WinCounter.ToString();
         restartButton.SetActive(true);
     }
 
-    // restart random
-    public void RestartButtons() {
-        for (int i = 0; i < buttonList.Length; i++) {
-            buttonList[i].GetComponent<Square>().button.interactable = true;
-            buttonList[i].GetComponent<Square>().SetIsAlone(false);
-            buttonList[i].GetComponent<Image>().sprite = normalSprite;
-            buttonList[i].transform.localPosition = startPositions[i];
-            
-        }
-
-    }
-
     public void EndTurn() {
         if (restartedAlready)
             restartedAlready = false;
+
+        StopCoroutine("SetTimer");
         CheckForAlones();
-        if (!isGameOver) {
+
+        if (!isGameOver) {  
+            StartCoroutine("SetTimer",16);
             // sound.GameSound(2);
             //UnSelect();
             playerSide = (playerSide == firstSprite) ? secondSprite : firstSprite;
@@ -282,7 +280,6 @@ public class GameWorld : NetworkBehaviour {
         }
 
         isGameOver = true;
-
         canPlay = false;
         StartCoroutine("GameOverRoutine", playerSide);
     }
@@ -329,18 +326,25 @@ public class GameWorld : NetworkBehaviour {
             if (buttonList[i].GetComponent<Square>().GetSelected()) buttonList[i].GetComponent<Square>().Restart();
     }
 
+    public void RestartButtons() {
+        for (int i = 0; i < buttonList.Length; i++) {
+            buttonList[i].GetComponent<Square>().button.interactable = true;
+            buttonList[i].GetComponent<Square>().SetIsAlone(false);
+            buttonList[i].GetComponent<Image>().sprite = normalSprite;
+            buttonList[i].transform.localPosition = startPositions[i];
+        }
+    }
+
     public void Restart() {
         if (restartedAlready)
             return;
 
-
+        isGameOver = false;
         restartButton.SetActive(false);
         gameOverPanel.SetActive(false);
         sumOfAlones = 0;
         numOfInteractables = 0;
         speed = 0;
-
-
 
         //ko igra prvi 
         blueTake = (playerSide == firstSprite) ? true : false;
@@ -380,7 +384,6 @@ public class GameWorld : NetworkBehaviour {
         }
 
         restartedAlready = true;
-        isGameOver = false;
         //DoRandom();
     }
     
@@ -412,6 +415,4 @@ public class GameWorld : NetworkBehaviour {
     public bool GetGameOver() {
         return isGameOver;
     }
-
-
 }

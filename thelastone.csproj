@@ -354,13 +354,17 @@
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Scripts\AdManagerScript.cs" />
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\ButtonManagerOffline.cs" />
     <Compile Include="Assets\Scripts\ClickSound.cs" />
     <Compile Include="Assets\Scripts\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\GameWorldOffline.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\Disconnect.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\HostGame.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\JoinGame.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\LobbyDisconnectScript.cs" />
     <Compile Include="Assets\Scripts\LobbyScripts\RoomListItem.cs" />
+    <Compile Include="Assets\Scripts\OffSquare.cs" />
+    <Compile Include="Assets\Scripts\RestartController.cs" />
     <Compile Include="Assets\Scripts\Square.cs" />
     <Compile Include="Assets\Scripts\StartMatchProcedures.cs" />
     <Compile Include="Assets\Scripts\TutGameWorld.cs" />

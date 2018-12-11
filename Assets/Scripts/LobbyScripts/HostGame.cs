@@ -41,7 +41,8 @@ public class HostGame : MonoBehaviour
         {
             networkManager.matchMaker.CreateMatch(roomName, roomSize, true, roomPassword, "", "", 0, 0, networkManager.OnMatchCreate);
             GameObject.Find("Menus").SetActive(false);
-            backButton.SetActive(false);
+            if (backButton.activeSelf)
+                backButton.SetActive(false);
             disconnectButton.SetActive(true);
             WaitingText.text = "Waiting for an opponent...";
         }

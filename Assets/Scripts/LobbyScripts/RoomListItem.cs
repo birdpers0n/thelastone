@@ -23,7 +23,9 @@ public class RoomListItem : MonoBehaviour
 
     public void JoinRoom()
     {
+  
         joinRoomCallback.Invoke(match);
+
     }
 
 }
