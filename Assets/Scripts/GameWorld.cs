@@ -17,6 +17,10 @@ public class GameWorld : NetworkBehaviour {
     public Sprite playerSide, firstSprite, secondSprite, disabledSprite, normalSprite;
     private ClickSound sound;
     private Player player;
+    public bool canceled;
+
+    public bool isTimeOut;
+    public Text timeOutText;
 
     public GameObject expButton;
 
@@ -63,6 +67,7 @@ public class GameWorld : NetworkBehaviour {
         //DoRandom();
     }
 
+
     public void CheckSquares(string tag) {
         int i = int.Parse(tag);
         buttonList[i].GetComponent<Image>().sprite = playerSide;
@@ -74,21 +79,22 @@ public class GameWorld : NetworkBehaviour {
         
     }
 
-    IEnumerator SetTimer(int time) {
-        int border = time;
-        for(int i = 0; i < border; i++) {
-            time--;
-            timerText.text = time.ToString();
+    public IEnumerator SetTimer() {
+        for (int i = 0; i < player.timeBorder; i++) {
+            timeOutText.text = player.timer.ToString();
+            player.timer--;
             yield return new WaitForSeconds(1f);
         }
-        if (client) FindObjectOfType<Player>().CmdEndTurn();
-
-
-
+        isTimeOut = true;
     }
 
 
     public void Update() {
+
+        if (isTimeOut) {
+            timeOutText.text = "TIME OUT! ";
+            isTimeOut = false;
+        }
 
         for (int i = 0; i < syncList.Count; i++) {
             if (syncList[i] == i) {
@@ -175,7 +181,7 @@ public class GameWorld : NetworkBehaviour {
         CheckForAlones();
 
         if (!isGameOver) {  
-            StartCoroutine("SetTimer",16);
+            StartCoroutine("SetTimer",15);
             // sound.GameSound(2);
             //UnSelect();
             playerSide = (playerSide == firstSprite) ? secondSprite : firstSprite;
@@ -267,17 +273,17 @@ public class GameWorld : NetworkBehaviour {
         }
 
 
-        if (!client && blueWin) {
-            DataPersistence.data.exp += 10;
-            DataPersistence.data.Save();
-            DataPersistence.data.Load();
-            expButton.GetComponentInChildren<Text>().text = "EXP: " + DataPersistence.data.exp.ToString();
-        } else if (client && !blueWin) {
-            DataPersistence.data.exp += 10;
-            DataPersistence.data.Save();
-            DataPersistence.data.Load();
-            expButton.GetComponentInChildren<Text>().text = "EXP: " + DataPersistence.data.exp.ToString();
-        }
+        //if (!client && blueWin) {
+        //    DataPersistence.data.exp += 10;
+        //    DataPersistence.data.Save();
+        //    DataPersistence.data.Load();
+        //    expButton.GetComponentInChildren<Text>().text = "EXP: " + DataPersistence.data.exp.ToString();
+        //} else if (client && !blueWin) {
+        //    DataPersistence.data.exp += 10;
+        //    DataPersistence.data.Save();
+        //    DataPersistence.data.Load();
+        //    expButton.GetComponentInChildren<Text>().text = "EXP: " + DataPersistence.data.exp.ToString();
+        //}
 
         isGameOver = true;
         canPlay = false;
@@ -322,8 +328,10 @@ public class GameWorld : NetworkBehaviour {
     }
 
     public void CancelMove() {
-        for (int i = 0; i < buttonList.Length; i++)
+        for (int i = 0; i < buttonList.Length; i++) {
             if (buttonList[i].GetComponent<Square>().GetSelected()) buttonList[i].GetComponent<Square>().Restart();
+        }
+        
     }
 
     public void RestartButtons() {
@@ -339,6 +347,8 @@ public class GameWorld : NetworkBehaviour {
         if (restartedAlready)
             return;
 
+        StopCoroutine("SetTimer");
+        StartCoroutine("SetTimer", 15);
         isGameOver = false;
         restartButton.SetActive(false);
         gameOverPanel.SetActive(false);

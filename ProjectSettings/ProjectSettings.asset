@@ -165,7 +165,7 @@ PlayerSettings:
     Android: com.cabbagegames.thelastone
   buildNumber: {}
   AndroidBundleVersionCode: 3
-  AndroidMinSdkVersion: 16
+  AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 

@@ -78,6 +78,7 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
                     //illegal move
                     //  sound.GameSound(3);
                     //   gw.CancelMove();
+                    canceledMove = true;
                     FindObjectOfType<Player>().CmdCancelMove();
                 }
             } else {
@@ -93,6 +94,7 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
                     //illegal move
                     //  sound.GameSound(3);
                     //  gw.CancelMove();
+                    canceledMove = true;
                     FindObjectOfType<Player>().CmdCancelMove();
                 }
             }
@@ -123,6 +125,7 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
         } else if (thisPos != buttonPos) {
             //sound.GameSound(3);
             //gw.CancelMove();
+            canceledMove = true;
             FindObjectOfType<Player>().CmdCancelMove();
         }
     }

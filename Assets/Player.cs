@@ -13,6 +13,8 @@ public class Player : NetworkBehaviour {
     [HideInInspector]
     public bool changedText = false;
 
+    public int timer,timeBorder;
+
     [SyncVar]
     public int disconnected = 0;
 
@@ -23,9 +25,12 @@ public class Player : NetworkBehaviour {
 
     void Start() {
         gw = FindObjectOfType<GameWorld>().GetComponent<GameWorld>();
+        timer = 15;
+        timeBorder = timer;
         numOfPlayers++;
+
         if (numOfPlayers == 2) {
-            gw.StartCoroutine("SetTimer",16);
+            gw.SetTimer();
         }
 
         if (!isLocalPlayer) return;
@@ -35,6 +40,7 @@ public class Player : NetworkBehaviour {
         }
         for (int i = 0; i < 25; i++) gw.syncList.Add(-1);
         CmdRand();
+  
     }
 
     void Update()
@@ -44,6 +50,7 @@ public class Player : NetworkBehaviour {
             if (isLocalPlayer) {
                 disconnectMark = false;
                 CmdMarkAsDisconnected();
+
             }
         }
 
