@@ -43,7 +43,8 @@ public class Disconnect : NetworkBehaviour {
     public void EndConnection()
     {
         spawner.GetComponent<ButtonSpawner>().DisconnectedFeedback();
-        networkManager = NetworkManager.singleton;
+
+      //  networkManager = NetworkManager.singleton;
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < players.Length; i++)
@@ -56,14 +57,22 @@ public class Disconnect : NetworkBehaviour {
 
     public void ReallyEnd()
     {
-        if (!networkManager)
-            networkManager = NetworkManager.singleton;
-        
+        if (networkManager == null) {
+            networkManager = FindObjectOfType<NetworkManager>();
+        }
+
+        if (spawner == null) {
+            spawner = FindObjectOfType<ButtonSpawner>().gameObject;
+        }
+
+
         networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
         0, networkManager.OnDropConnection);
         networkManager.StopHost();
 
         spawner.GetComponent<ButtonSpawner>().checkedAlready = false;
     }
+
+  
 
 }

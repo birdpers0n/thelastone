@@ -52,6 +52,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d87bd8461339840bea9bee61989911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  disconnectMark: 0
+  changedText: 0
+  disconnectBtn: {fileID: 114137016898154670, guid: 455b0513e886650479c7212afab4dbd6,
+    type: 2}
+  disconnected: 0
+  opponentPlayer: {fileID: 0}
+  requestedRematch: 0
+  acceptedRematch: 0
 --- !u!114 &114695468104866380
 MonoBehaviour:
   m_ObjectHideFlags: 1

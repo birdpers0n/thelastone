@@ -39,6 +39,9 @@ public class HostGame : MonoBehaviour
     {
         if (roomName != "" && roomName != null)
         {
+            if (networkManager.matchMaker == null) {
+                networkManager.StartMatchMaker();
+            }
             networkManager.matchMaker.CreateMatch(roomName, roomSize, true, roomPassword, "", "", 0, 0, networkManager.OnMatchCreate);
             GameObject.Find("Menus").SetActive(false);
             if (backButton.activeSelf)

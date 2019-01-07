@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class LobbyDisconnectScript : NetworkBehaviour {
+public class LobbyDisconnectScript : MonoBehaviour {
 
-    NetworkManager networkManager;
+    public NetworkManager networkManager;
 
     public void LobbyDisconnect()
     {
-        networkManager = NetworkManager.singleton;
+        if (networkManager == null) {
+            networkManager = NetworkManager.singleton;
+        }
+
         networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
             0, networkManager.OnDropConnection);
         networkManager.StopHost();
+
+
         GameObject.Find("HostControl").GetComponent<HostGame>().ReactivateMenu();
     }
 }
