@@ -40,7 +40,19 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
 
     public void ChangeScene(string name) {
         if (name == "Game" && (PlayerPrefs.GetInt("FirstGame") == 1)) name = "Tutorial";
+
+        if (name == "Start" && SceneManager.GetActiveScene().name == "Game" && (HostMenu.active || JoinMenu.active)) {
+            if (HostMenu.active) HostMenu.SetActive(false);
+            if (JoinMenu.active) JoinMenu.SetActive(false);
+            OnlineMenu.SetActive(true);
+            name = "Game";
+        }  else if (name == "Start" && SceneManager.GetActiveScene().name == "Game") {
+            PlayMenu.SetActive(true);
+            MainMenu.SetActive(false);
+        }
+
         SceneManager.LoadScene(name);
+
     }
 
     public void Restart(TutGameWorld gw) {

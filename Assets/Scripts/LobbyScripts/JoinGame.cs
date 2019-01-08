@@ -24,6 +24,8 @@ public class JoinGame : MonoBehaviour
 
     string inputPassword = "";
 
+    public GameObject menus;
+
     void Start()
     {
         networkManager = NetworkManager.singleton;
@@ -132,7 +134,8 @@ public class JoinGame : MonoBehaviour
         else
         {
             networkManager.matchMaker.JoinMatch(_match.networkId, "", "", "", 0, 0, networkManager.OnMatchJoined);
-            GameObject.Find("Menus").SetActive(false);
+          //  GameObject.Find("Menus").SetActive(false);
+            menus.SetActive(false);
         }
 
     }
@@ -145,7 +148,9 @@ public class JoinGame : MonoBehaviour
     public void VerifyPassword()
     {
         networkManager.matchMaker.JoinMatch(matchPlaceHolder.networkId, inputPassword, "", "", 0, 0, networkManager.OnMatchJoined);
-        GameObject.Find("Menus").SetActive(false);
+
+       // GameObject.Find("Menus").SetActive(false);
+        menus.SetActive(false);
     }
 
     public void SearchRoom()

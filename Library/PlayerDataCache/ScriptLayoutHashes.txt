@@ -1,4 +1,4 @@
-WindowsStandalone
+Android
 SceneListBegin?
 Assets/Scenes/Start.unity
 Assets/Scenes/Game.unity
@@ -54,7 +54,7 @@ c63db43c730fa2cbb8ca07de15898cb6 UnityEngine.UI.dll:UnityEngine.UI.Toggle
 f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 86d36c43c53541d667100dc90b89cfba UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
-3e592d5e5e078e9b570cbefeeb25988f Assembly-CSharp.dll:.JoinGame
+65d2b9a98be62ef8b27606f6f5d74611 Assembly-CSharp.dll:.JoinGame
 13b36a76f0582d950b094254f70fbc6d Assembly-CSharp.dll:.ButtonSpawner
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -125,7 +125,8 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LobbyDisconnectScript
+7a4861d1f606dbc657d6ae54e0119ad9 Assembly-CSharp.dll:.LobbyDisconnectScript
+1df234784afa2cbe0613283a35c66908 Assembly-CSharp.dll:.OurNetworkManager
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
 7be03151f0a779e0e0ec687eba7ae889 Assembly-CSharp.dll:.GameWorldOffline
@@ -164,4 +165,3 @@ e2fc6fa0460cdfea8804b7196fc6824d Assembly-CSharp.dll:.Square
 c2270b1cec306c129f54240f890d9e12 Assembly-CSharp.dll:.TutSquare
 23dca76ae7156e8621fc289f51a85d4c Assembly-CSharp.dll:.Disconnect
 d482e1f6b673b8a508eb40ef8d072283 Assembly-CSharp.dll:.ButtonManagerOffline
-1df234784afa2cbe0613283a35c66908 Assembly-CSharp.dll:.OurNetworkManager

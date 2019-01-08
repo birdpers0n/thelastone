@@ -121,6 +121,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pressedSprite: {fileID: 0}
   normalSprite: {fileID: 0}
+  Menus: {fileID: 0}
+  MainMenu: {fileID: 1975786675399816, guid: 66588196a85f9d945ae5aec93e5bca1f, type: 2}
+  PlayMenu: {fileID: 1668166203451712, guid: 62ad7acbde8701846bcef26c39578968, type: 2}
+  OnlineMenu: {fileID: 0}
+  HostMenu: {fileID: 0}
+  JoinMenu: {fileID: 0}
+  backButton: {fileID: 0}
 --- !u!224 &224023919811304840
 RectTransform:
   m_ObjectHideFlags: 1
