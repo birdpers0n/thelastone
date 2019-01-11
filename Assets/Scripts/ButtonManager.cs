@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-
+using UnityEditor;
 
 public class ButtonManager : MonoBehaviour, IPointerUpHandler {
 
@@ -29,6 +29,7 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
             GetComponent<Image>().sprite = pressedSprite;
     }
 
+
     public void Update() {
         // back button on mobile
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -46,9 +47,16 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
             if (JoinMenu.active) JoinMenu.SetActive(false);
             OnlineMenu.SetActive(true);
             name = "Game";
-        }  else if (name == "Start" && SceneManager.GetActiveScene().name == "Game") {
+        }  else if (name == "Start" && (SceneManager.GetActiveScene().name == "Game" || SceneManager.GetActiveScene().name == "GameOffline")) {
             PlayMenu.SetActive(true);
             MainMenu.SetActive(false);
+        } else if(name == "Start" && SceneManager.GetActiveScene().name == "Start") {
+            PlayMenu.SetActive(false);
+            MainMenu.SetActive(true);
+            PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
+            PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
+
+            return;
         }
 
         SceneManager.LoadScene(name);
@@ -65,16 +73,18 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
         GetComponent<Image>().sprite = (GetComponent<Image>().sprite == normalSprite)? pressedSprite : normalSprite;
     }
 
-    public void OpenPlayMenu()
-    {
+    public void OpenPlayMenu() {
         MainMenu.SetActive(false);
         PlayMenu.SetActive(true);
+        PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
+        PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
     }
 
-    public void BackToMain()
-    {
+    public void BackToMain() {
         PlayMenu.SetActive(false);
         MainMenu.SetActive(true);
+        PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
+        PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
     }
 
     public void OpenHostMenu()

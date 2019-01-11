@@ -1578,6 +1578,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114021304918181982, guid: 8bff449634866d04097efe01abbc8ade,
+        type: 2}
+      propertyPath: PlayMenu
+      value: 
+      objectReference: {fileID: 1701545813613714, guid: 62ad7acbde8701846bcef26c39578968,
+        type: 2}
+    - target: {fileID: 114021304918181982, guid: 8bff449634866d04097efe01abbc8ade,
+        type: 2}
+      propertyPath: MainMenu
+      value: 
+      objectReference: {fileID: 1856162311751880, guid: 66588196a85f9d945ae5aec93e5bca1f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bff449634866d04097efe01abbc8ade, type: 2}
   m_IsPrefabParent: 0
