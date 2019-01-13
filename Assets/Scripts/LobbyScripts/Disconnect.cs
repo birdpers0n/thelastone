@@ -44,11 +44,17 @@ public class Disconnect : NetworkBehaviour {
     {
         spawner.GetComponent<ButtonSpawner>().DisconnectedFeedback();
 
-      //  networkManager = NetworkManager.singleton;
+        // bez ovoga na pocetku se javlja onaj problem (connection still exists)
+        //if (networkManager == null) {
+        //    networkManager = NetworkManager.singleton;
+        //}
+
+        //networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
+        //    0, networkManager.OnDropConnection);
+        //networkManager.StopHost();
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < players.Length; i++)
-        {
+        for (int i = 0; i < players.Length; i++) {
             players[i].GetComponent<Player>().TargetOpponent();
             players[i].GetComponent<Player>().disconnectMark = true;
         }

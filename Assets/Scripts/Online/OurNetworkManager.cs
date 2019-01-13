@@ -21,7 +21,6 @@ public class OurNetworkManager : NetworkManager {
         // ** critical ** you must stop your client discovery RIGHT HERE,
         // directly after the call to the base.  you actually can NOT do it
         // in your discovery client
-
         int cid = nc.connectionId;
         int hid = nc.hostId;
 

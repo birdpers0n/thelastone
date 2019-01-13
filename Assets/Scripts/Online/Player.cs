@@ -46,11 +46,11 @@ public class Player : NetworkBehaviour {
     {
         if (disconnectMark)
         {
-            //   if (isLocalPlayer) {
+               if (isLocalPlayer) {
             CmdMarkAsDisconnected();
             disconnectMark = false;
 
-         //   }
+            }
         }
 
         //if (isServer)

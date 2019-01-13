@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 
 public class ButtonManager : MonoBehaviour, IPointerUpHandler {
 
@@ -18,6 +17,9 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
 
     public GameObject backButton;
 
+    public static bool isMainActive = true;
+
+
     public void Awake() {
         if (normalSprite == null) {
             return;
@@ -29,6 +31,15 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
             GetComponent<Image>().sprite = pressedSprite;
     }
 
+    public void Start() {
+        if(PlayMenu != null) {
+            if (isMainActive) {
+                BackToMain();
+            } else {
+                OpenPlayMenu();
+            }
+        } 
+    }
 
     public void Update() {
         // back button on mobile
@@ -42,20 +53,14 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
     public void ChangeScene(string name) {
         if (name == "Game" && (PlayerPrefs.GetInt("FirstGame") == 1)) name = "Tutorial";
 
-        if (name == "Start" && SceneManager.GetActiveScene().name == "Game" && (HostMenu.active || JoinMenu.active)) {
-            if (HostMenu.active) HostMenu.SetActive(false);
-            if (JoinMenu.active) JoinMenu.SetActive(false);
+        if (name == "Start" && SceneManager.GetActiveScene().name == "Game" && (HostMenu.activeSelf || JoinMenu.activeSelf)) {
+            if (HostMenu.activeSelf) HostMenu.SetActive(false);
+            if (JoinMenu.activeSelf) JoinMenu.SetActive(false);
             OnlineMenu.SetActive(true);
             name = "Game";
-        }  else if (name == "Start" && (SceneManager.GetActiveScene().name == "Game" || SceneManager.GetActiveScene().name == "GameOffline")) {
-            PlayMenu.SetActive(true);
-            MainMenu.SetActive(false);
-        } else if(name == "Start" && SceneManager.GetActiveScene().name == "Start") {
-            PlayMenu.SetActive(false);
-            MainMenu.SetActive(true);
-            PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
-            PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
-
+        }  else if(name == "Start" && SceneManager.GetActiveScene().name == "Start") {
+            isMainActive = true;
+            BackToMain();
             return;
         }
 
@@ -74,17 +79,15 @@ public class ButtonManager : MonoBehaviour, IPointerUpHandler {
     }
 
     public void OpenPlayMenu() {
+        isMainActive = false;
         MainMenu.SetActive(false);
         PlayMenu.SetActive(true);
-        PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
-        PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
     }
 
     public void BackToMain() {
+        isMainActive = true;
         PlayMenu.SetActive(false);
         MainMenu.SetActive(true);
-        PrefabUtility.ReplacePrefab(MainMenu, PrefabUtility.GetPrefabParent(MainMenu), ReplacePrefabOptions.ConnectToPrefab);
-        PrefabUtility.ReplacePrefab(PlayMenu, PrefabUtility.GetPrefabParent(PlayMenu), ReplacePrefabOptions.ConnectToPrefab);
     }
 
     public void OpenHostMenu()

@@ -46,6 +46,10 @@ public class GameWorldOffline : MonoBehaviour {
 
     }
 
+    public void Start() {
+        FindObjectOfType<AdManager>().ShowInter();
+    }
+
     public void SetUpButtons() {
         startPositions = new Vector3[25];
         for (int i = 0; i < buttonList.Length; i++) {

@@ -93,6 +93,9 @@ public class GameWorld : NetworkBehaviour {
             currTime = DateTime.UtcNow;
             timeDiff = (float) (currTime - lastTime).TotalSeconds;
             timer -= timeDiff;
+            if(timer <= 0) {
+                timerText.text = "0";
+            }
         }
     }
 
