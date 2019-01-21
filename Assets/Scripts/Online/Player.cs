@@ -12,6 +12,7 @@ public class Player : NetworkBehaviour {
     [HideInInspector]
     public bool changedText = false;
     public Button disconnectBtn;
+    private NetworkManager networkManager;
 
     [SyncVar]
     public int disconnected = 0;
@@ -21,6 +22,7 @@ public class Player : NetworkBehaviour {
     public bool acceptedRematch = false;
 
     public static int numOfPlayers = 0;
+    private static int brojac = 0;
 
     void Start() {
         gw = FindObjectOfType<GameWorld>().GetComponent<GameWorld>();
@@ -42,8 +44,10 @@ public class Player : NetworkBehaviour {
     }
 
 
+
+
     void Update()
-    {
+    {   
         if (disconnectMark)
         {
                if (isLocalPlayer) {
@@ -235,6 +239,25 @@ public class Player : NetworkBehaviour {
     {
         numOfPlayers = 0;
         disconnected = 1;
+    }
+
+    [Command]
+    public void CmdDisconnect() {
+        RpcDisconnect();
+    }
+
+    [ClientRpc]
+    public void RpcDisconnect() {
+
+        if (networkManager == null) networkManager = FindObjectOfType<NetworkManager>();
+
+        networkManager.matchMaker.DropConnection(networkManager.matchInfo.networkId, networkManager.matchInfo.nodeId,
+        0, networkManager.OnDropConnection);
+        if (!isServer) {
+            networkManager.StopHost();
+        } else {
+            networkManager.StopClient();
+        }
     }
 
     public override void OnStartLocalPlayer()
