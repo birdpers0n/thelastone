@@ -102,6 +102,7 @@ public class Square : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, 
     }
 
     public void OnPointerUp(PointerEventData eventData) {
+        gw.canPlay = false;
         pressed = false;
         FindObjectOfType<Player>().CmdUnSelect();
         if (!canceledMove && !gw.GetGameOver() && pointerUp) {

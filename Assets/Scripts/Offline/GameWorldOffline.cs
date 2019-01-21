@@ -126,10 +126,10 @@ public class GameWorldOffline : MonoBehaviour {
     public void TravelToScore(int i) {
         // put do score bannera na kraju runde
         if (blueWin) 
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x * 1.03f, "y", p1PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x, "y", p1PH.transform.position.y, "time", 1.5f,
                                                                 "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
          else
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x * 1.03f, "y", p2PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x, "y", p2PH.transform.position.y, "time", 1.5f,
                                                                "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
     }
 

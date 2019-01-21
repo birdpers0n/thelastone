@@ -204,10 +204,10 @@ public class GameWorld : NetworkBehaviour {
     public void TravelToScore(int i) {
         // put do score bannera
         if (blueWin)
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x * 1.03f, "y", p1PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p1PH.transform.position.x, "y", p1PH.transform.position.y, "time", 1.5f,
                                                                 "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
         else
-            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x * 1.03f, "y", p2PH.transform.position.y * 1.03f, "time", 1.5f,
+            iTween.MoveTo(buttonList[i].gameObject, iTween.Hash("x", p2PH.transform.position.x, "y", p2PH.transform.position.y, "time", 1.5f,
                                                                "easetype", "easeOutExpo", "oncompletetarget", this.gameObject, "oncomplete", "GoPanel"));
     }
 
@@ -376,7 +376,7 @@ public class GameWorld : NetworkBehaviour {
     }
 
     public void UnSelect() {
-
+        canPlay = true;
         for (int i = 0; i < buttonList.Length; i++) {
             if (buttonList[i].GetComponent<Square>().GetSelected()) {
                 buttonList[i].GetComponent<Square>().SetSelected(false);

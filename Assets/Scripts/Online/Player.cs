@@ -85,7 +85,7 @@ public class Player : NetworkBehaviour {
                     GameObject.FindGameObjectWithTag("EndText").GetComponent<Text>().text = "ACCEPT";
             }
 
-            if (requestedRematch && opponentPlayer.GetComponent<Player>().acceptedRematch)
+            if (requestedRematch && opponentPlayer.GetComponent<Player>().acceptedRematch && isLocalPlayer)
             {
                 gw.RestartButtons();
                 if (isServer) {
@@ -95,7 +95,7 @@ public class Player : NetworkBehaviour {
                 requestedRematch = false;
                 gw.GetComponent<GameWorld>().Restart();
             }
-            else if (acceptedRematch)
+            else if (acceptedRematch && isLocalPlayer)
             {
                 gw.RestartButtons();
                 if (isServer) {
